@@ -1,0 +1,104 @@
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim2;
+
+/* USER CODE BEGIN PV */
+int DIR = 0;
+
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_TIM2_Init(void);
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	if(GPIO_Pin == F_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_SET);
+
+		TIM2->CCR1 = 500;TIM2->CCR2 = 500;
+		}
+
+	if(GPIO_Pin == B_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_RESET);
+
+		TIM2->CCR1 = 500;TIM2->CCR2 = 500;
+		}
+
+	if(GPIO_Pin == L_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_SET);
+
+		TIM2->CCR1 = 0;TIM2->CCR2 = 500;
+		}
+
+	if(GPIO_Pin == R_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_RESET);
+
+		TIM2->CCR1 = 500;TIM2->CCR2 = 0;
+		}
+
+	if(GPIO_Pin == F_Pin & R_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_SET);
+
+		TIM2->CCR1 = 750;TIM2->CCR2 = 250;
+		}
+
+	if(GPIO_Pin == F_Pin & L_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_SET);
+
+		TIM2->CCR1 = 250;TIM2->CCR2 = 750;
+		}
+
+	if(GPIO_Pin == B_Pin & R_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_RESET);
+
+		TIM2->CCR1 = 750;TIM2->CCR2 = 250;
+		}
+
+	if(GPIO_Pin == B_Pin & L_Pin){
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_RESET);
+
+		TIM2->CCR1 = 250;TIM2->CCR2 = 750;
+		}
+	else{
+		HAL_GPIO_WritePin(D1_GPIO_Port, D1_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, GPIO_PIN_SET);
+
+		TIM2->CCR1 = 0;TIM2->CCR2 = 0;
+		}
+}
+/* USER CODE END 0 */
